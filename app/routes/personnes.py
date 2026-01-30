@@ -1,7 +1,7 @@
 from fastapi import APIRouter, HTTPException
 from typing import List
 from app.services.personnes_service import create_personne, fetch_personnes, update_personne, remove_personne
-from app.models.personne import Personne, DeletePersonne
+from app.models.personne import Personne, PersonneDelete
 
 router = APIRouter(prefix="/personnes", tags=["Personnes"])
 
@@ -29,7 +29,7 @@ def update_personne_route(id: int, payload: Personne):
         raise HTTPException(status_code=500, detail="Erreur serveur")
 
 @router.post("/delete")
-def delete_personne(payload: DeletePersonne):
+def delete_personne(payload: PersonneDelete):
     try:
         remove_personne(payload.id)
         return {"success": True, "message": "Suppression effectuée"}
