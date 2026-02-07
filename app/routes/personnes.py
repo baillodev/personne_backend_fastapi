@@ -9,14 +9,15 @@ router = APIRouter(prefix="/personnes", tags=["Personnes"])
 def create_personne_route(payload: Personne):
     try:
         create_personne(payload)
-        return {"success": True, "message": "Personne créée"}
+        return {"success": True, "message": "Personne créée", "source": "fastapi"}
     except Exception:
         raise HTTPException(status_code=500, detail="Erreur serveur")
 
 @router.get("", response_model=List[Personne])
 def get_personnes():
     try:
-        return fetch_personnes()
+        personnes = fetch_personnes()
+        return {"data": personnes, "source": "fastapi"}
     except Exception:
         raise HTTPException(status_code=500, detail="Erreur serveur")
 
@@ -24,7 +25,7 @@ def get_personnes():
 def update_personne_route(id: int, payload: Personne):
     try:
         update_personne(id, payload)
-        return {"success": True, "message": "Personne mise à jour"}
+        return {"success": True, "message": "Personne mise à jour", "source": "fastapi"}
     except Exception:
         raise HTTPException(status_code=500, detail="Erreur serveur")
 
@@ -32,6 +33,6 @@ def update_personne_route(id: int, payload: Personne):
 def delete_personne(payload: PersonneDelete):
     try:
         remove_personne(payload.id)
-        return {"success": True, "message": "Suppression effectuée"}
+        return {"success": True, "message": "Suppression effectuée", "source": "fastapi"}
     except Exception:
         raise HTTPException(status_code=500, detail="Erreur serveur")
